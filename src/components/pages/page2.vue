@@ -206,7 +206,7 @@ export default {
         getRequest(url).then(resp => {
           _this.loading = false;
           console.log('yes');
-          //console.log(resp.data.data);
+          console.log(resp.data.data);
           if(resp.status === 200) {
             _this.tableData = resp.data.rows;
             _this.totalCount = resp.data.total;
