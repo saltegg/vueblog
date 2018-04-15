@@ -1,24 +1,31 @@
 <template>
     <el-row class="container">
         <!--头部-->
-        <el-col :span="24" class="heard">
-            
+        <el-col :span="24" class="topbar-wrap">
+          <div class="topbar-logos" v-show="!collapsed">
+            <img style="text-align:center;" src="../assets/logo.png">
+          </div>
+          <div class="topbar-title">
+            <span v-if="!collapsed" style="font-size: 18px;color: #fff;">V-博客后台管理系统</span>
+            <span v-else style="padding-left:63px; font-size: 18px;color: #fff;">V-博客后台管理系统</span>
+          </div>
         </el-col>
         <!--中间-->
         <el-col :span="24" class="main">
-            <aside>
+            <aside :class="{showSidebar:!collapsed}">
                 <!--展开折叠开关-->
-                <div class="menu-toggle"><i class="el-icon-d-arrow-left"></i></div>
+                <div v-if='!collapsed' class="menu-toggle" @click.prevent="collapse"><i class="el-icon-d-arrow-left"></i></div>
+                <div v-else='collapsed' class="menu-toggle" @click.prevent="collapse"><i class="el-icon-d-arrow-right"></i></div>
                 <!--导航菜单-->
-                <el-menu :default-active="defaultActiveIndex" router @select="handleselect">
+                <el-menu :default-active="defaultActiveIndex" router @select="handleselect" :collapse="collapsed">
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                         <el-submenu v-if="!item.leaf" :index="index+''">
                             <template slot="title">
-                              <i :class=""></i>
+                              <i :class="item.iconCls"></i>
                               <span slot="title">{{item.name}}</span>
                             </template>
                             <el-menu-item v-for="term in item.children" :key="term.path" :index="term.path">
-                                <i :class="term.iconCls"></i><span slot="title">{{term.name}}</span>
+                                <i :class=""></i><span slot="title">{{term.name}}</span>
                             </el-menu-item>
                         </el-submenu>
                         <template v-else>
@@ -48,14 +55,21 @@
     export default {
         name: 'Main',
         data(){
-            return {
-                defaultActiveIndex:"0"
-            }
+          return {
+            defaultActiveIndex:"0",
+            collapsed: false,
+          }
         },
         methods:{
-            handleselect(index) {
-                this.defaultActiveIndex = index;
-            }
+          handleselect(index) {
+              this.defaultActiveIndex = index;
+          },
+          collapse: function () {
+            this.collapsed = !this.collapsed
+          },
+          showMenu (i, status) {
+            this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-' + i)[0].style.display = status ? 'block' : 'none'
+          },
         }
 
     }
@@ -68,10 +82,6 @@
     bottom: 0px;
     width: 100%;
 
-    .heard{
-        height: 50px;
-        background:black;
-    }
 
     .topbar-wrap {
       height: 50px;
@@ -90,8 +100,9 @@
       }
       .topbar-logos {
         float: left;
-        width: 120px;
+        width: 180px;
         line-height: 26px;
+        text-align: center;
       }
       .topbar-logo img, .topbar-logos img {
         height: 40px;
@@ -102,8 +113,8 @@
         float: left;
         text-align: left;
         width: 200px;
-        padding-left: 10px;
-        border-left: 1px solid #000;
+        /*padding-left: 10px;
+        border-left: 1px solid #000;*/
       }
       .topbar-account {
         float: right;

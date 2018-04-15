@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let base = 'http://localhost:8081';
+let base = 'http://localhost:8081/blog-manager';
 export const getRequest = (url,param) => {
     return axios({
         method:'get',

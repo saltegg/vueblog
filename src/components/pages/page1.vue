@@ -139,7 +139,9 @@ export default {
           console.log(json);
           if (json.error == 1) {
 //            _this.$refs.md.$imgUpdateByUrl(pos, json.msg)
-            _this.$refs.md.$imglst2Url([[pos, json.url]])
+            //_this.$refs.md.$imglst2Url([[pos, json.url]])
+            _this.$refs.md.$img2Url(pos, json.url);
+
           } else {
             _this.$message({type: json.status, message: json.message});
           }

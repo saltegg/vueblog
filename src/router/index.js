@@ -21,6 +21,7 @@ let router = new Router({
       name:'博客管理',
       component:Main,
       /*redirect:'/pages/welcome',*/
+      iconCls:'el-icon-menu',
       leaf:false,
       children: [
         {path:'/pages/page1', component:Page1, name:'添加微博'},
@@ -32,6 +33,7 @@ let router = new Router({
       path:'/',
       name:'评论管理',
       component:Main,
+      iconCls:'el-icon-star-off',
       leaf:true,
       children:[
         {path:'/pages/page3', component:Page3, name:'评论管理'}
@@ -40,6 +42,7 @@ let router = new Router({
     {
       path: '/',
       component: Main,
+      iconCls:'el-icon-info',
       leaf:true,
       name: '用户管理',
       children: [
